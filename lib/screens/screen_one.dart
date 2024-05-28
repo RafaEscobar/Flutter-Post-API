@@ -30,7 +30,6 @@ class _ScreenOneState extends State<ScreenOne> {
 
   @override
   Widget build(BuildContext context){
-    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Entradas del día'),
@@ -42,16 +41,15 @@ class _ScreenOneState extends State<ScreenOne> {
               itemCount: 10,
               itemBuilder: (context, index) {
                 return (isLoaded) ?
-                  Skeletonizer.zone(
+                  const Skeletonizer.zone(
                     child:  Skeletonizer(
                       enabled: true,
                       child : Column(
                         children: [
                           ContainerBox(
-                            size: size,
-                            boxColor: const Color.fromARGB(41, 33, 149, 243),
+                            boxColor: Color.fromARGB(41, 33, 149, 243),
                           ),
-                          const SizedBox(height: 10,)
+                          SizedBox(height: 10,)
                         ],
                       )
                     )
@@ -59,14 +57,16 @@ class _ScreenOneState extends State<ScreenOne> {
                   Column(
                     children: [
                       ContainerBox(
-                        size: size,
                         boxColor: Colors.blue,
                         boxChild: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                          child: Text('Valor: ${posts![index].title.substring(0, 12)}...', style: const TextStyle(color: Colors.white),),
+                          child: Text(
+                            'Valor: ${posts![index].title.substring(0, 12)}...',
+                            style: const TextStyle(
+                              color: Colors.white
+                            )
+                          ),
                         ),
-                        posts: posts,
-                        index: index
                       ),
                       const SizedBox(height: 10,)
                     ],
@@ -82,21 +82,16 @@ class _ScreenOneState extends State<ScreenOne> {
 class ContainerBox extends StatelessWidget {
   const ContainerBox({
     super.key,
-    required this.size,
     required this.boxColor,
     this.boxChild,
-    this.posts,
-    this.index,
   });
 
-  final Size size;
   final Color boxColor;
-  final List<Post>? posts;
-  final int? index;
   final Widget? boxChild;
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
       height: 26,
