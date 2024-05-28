@@ -36,46 +36,62 @@ class _ScreenOneState extends State<ScreenOne> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child:   Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return (isLoaded) ?
-                  const Skeletonizer.zone(
-                    child:  Skeletonizer(
-                      enabled: true,
-                      child : Column(
-                        children: [
-                          ContainerBox(
-                            boxColor: Color.fromARGB(41, 33, 149, 243),
-                          ),
-                          SizedBox(height: 10,)
-                        ],
-                      )
-                    )
-                  ) :
-                  Column(
-                    children: [
-                      ContainerBox(
-                        boxColor: Colors.blue,
-                        boxChild: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                          child: Text(
-                            'Valor: ${posts![index].title.substring(0, 12)}...',
-                            style: const TextStyle(
-                              color: Colors.white
-                            )
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10,)
-                    ],
-                  );
-              },
-            )
-          ),
+        child:   Body(isLoaded: isLoaded, posts: posts),
       )
     );
+  }
+}
+
+class Body extends StatelessWidget {
+  const Body({
+    super.key,
+    required this.isLoaded,
+    required this.posts,
+  });
+
+  final bool isLoaded;
+  final List<Post>? posts;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: ListView.builder(
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return (isLoaded) ?
+              const Skeletonizer.zone(
+                child:  Skeletonizer(
+                  enabled: true,
+                  child : Column(
+                    children: [
+                      ContainerBox(
+                        boxColor: Color.fromARGB(41, 33, 149, 243),
+                      ),
+                      SizedBox(height: 10,)
+                    ],
+                  )
+                )
+              ) :
+              Column(
+                children: [
+                  ContainerBox(
+                    boxColor: Colors.blue,
+                    boxChild: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                      child: Text(
+                        'Valor: ${posts![index].title.substring(0, 12)}...',
+                        style: const TextStyle(
+                          color: Colors.white
+                        )
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10,)
+                ],
+              );
+          },
+        )
+      );
   }
 }
 
